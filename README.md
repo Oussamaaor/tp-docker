@@ -55,3 +55,7 @@
 3. pour voir ce qui a été modifié dans le conteneur, par exemple un fichier ajouté ou changé. Ici `A /tmp/diagnostic.txt`
 4. le CPU, la mémoire utilisée et la limite, le réseau, le disque et le nombre de processus. Ici 0% de CPU, 836KiB de mémoire et 2 processus
 5. parce que ces modifs sont perdues si on recrée le conteneur et personne sait ce qui a été changé. Il faut mettre les changements dans le Dockerfile pour pouvoir refaire pareil
+
+## Conclusion
+
+Avec le multi-stage build l'image finale fait 12,8 Mo parce qu'elle a juste l'exécutable, sans le compilateur Go ni les outils. Elle est plus légère et il y a moins de choses qui peuvent avoir des failles. Pour la sécurité on a vu qu'on peut lancer un conteneur avec un utilisateur qui est pas root, en lecture seule avec juste `/tmp` en écriture, sans capacités et sans pouvoir gagner de privilèges. Ça limite ce qu'on peut faire si l'appli est attaquée mais ça suffit pas tout seul parce que le conteneur partage toujours le noyau de l'hôte.
